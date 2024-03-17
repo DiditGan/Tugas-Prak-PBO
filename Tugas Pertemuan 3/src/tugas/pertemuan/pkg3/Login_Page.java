@@ -4,17 +4,20 @@
  */
 package tugas.pertemuan.pkg3;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JRadioButton;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author acer
  */
-class KotakFrame extends JFrame{
+public class Login_Page extends JFrame implements ActionListener{
     //inisiasi object untuk label
     JLabel tulisan = new JLabel("Selamat Datang!");
     JLabel tulisan2 = new JLabel("Silahkan Masuk Untuk Melanjutkan.");
@@ -27,16 +30,16 @@ class KotakFrame extends JFrame{
     JTextField inputpass = new JTextField();
     
     //inisiasi object untuk pilihan gender
-    JRadioButton pilih1 = new JRadioButton("Laki-Laki");
+    JRadioButton pilih1 = new JRadioButton("Laki-Laki", true);
     JRadioButton pilih2 = new JRadioButton("Perempuan");
     
     //inisiasi object untuk button
     JButton submit = new  JButton ("Login");
     
-    KotakFrame(){
+    Login_Page(){
         setVisible(true);
         setSize(520, 480);
-        setTitle("Belajar Bikin Frame");
+        setTitle("Login Page");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         setLayout(null);
@@ -74,15 +77,30 @@ class KotakFrame extends JFrame{
         
         add(submit);
         submit.setBounds(10, 360, 490, 40);
+        submit.addActionListener(this);
     }
-}
-public class Login_Page {
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        KotakFrame kotakFrame = new KotakFrame();
+    @Override
+    public void actionPerformed(ActionEvent e) {
+//      System.out.println("Kepencet!");
+        try {
+            String username = inputuser.getText();
+//          if(pilih1.isSelected()){
+//              jeniskelamin = "l";
+//          } else {
+//            jeniskelamin = "p";
+//          }
+            String jeniskelamin = pilih1.isSelected() ? "l" : "p";
+            String password = inputpass.getText();
+            
+            if (username.isEmpty() || password.isEmpty()){
+                throw new Exception("Jangan kosong!!!.");
+            }
+        
+            new Halaman_Utama(username, jeniskelamin);
+            this.dispose();
+        } catch (Exception error) {
+            JOptionPane.showMessageDialog(this, error.getMessage());
+        }
     }
-    
 }
